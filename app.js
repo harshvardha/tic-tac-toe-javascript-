@@ -24,37 +24,30 @@ function fillBlock(event) {
     targetElement = event.target.querySelector('p')
     if (targetElement !== null) {
         coordinates = idToIndexMap[event.target.id]
-        if (playerTurn === 1) {
-            targetElement.innerHTML = 'X'
-            moveArray[coordinates[0]][coordinates[1]] = 'X'
-            console.log(moveArray)
-            moveCount++
-            if (checkForWin('X')) {
+        let playerSign = playerTurn === 1 ? 'X' : 'O'
+        targetElement.innerHTML = playerSign
+        moveArray[coordinates[0]][coordinates[1]] = playerSign
+        moveCount++
+        if (checkForWin(playerSign)) {
+            if (playerSign === "X") {
                 alert("Player 1 won")
-                playerTurn = -1
             }
-            else if (moveCount === 9) {
-                alert("Its a tie")
-                playerTurn = -1
+            else if (playerSign === "O") {
+                alert("Player 2 won")
             }
-            else {
+            playerTurn = -1
+        }
+        else if (moveCount === 9) {
+            alert("Its a tie")
+            playerTurn = -1
+        }
+        else {
+            if (playerTurn === 1) {
                 playerTurn = 2
                 player1.innerHTML = player1.innerHTML.substring(0, player1.innerHTML.length - 1)
                 player2.innerHTML += "*"
             }
-        }
-        else if (playerTurn === 2) {
-            targetElement.innerHTML = 'O'
-            moveArray[coordinates[0]][coordinates[1]] = 'O'
-            moveCount++
-            if (checkForWin('O')) {
-                alert("Player 2 won")
-                playerTurn = -1
-            }
-            else if (moveCount === 9) {
-                alert("Its a tie")
-            }
-            else {
+            else if (playerTurn === 2) {
                 playerTurn = 1
                 player2.innerHTML = player2.innerHTML.substring(0, player2.innerHTML.length - 1)
                 player1.innerHTML += "*"
